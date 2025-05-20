@@ -150,3 +150,16 @@ RUN sudo rosdep init && \
 
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && \
     echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
+
+RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+    ros-humble-nav2-* \
+    ros-humble-rplidar* \
+    ros-humble-xacro \
+    ros-humble-usb-cam #added webcam support
+
+RUN pip install pyquaternion
+
+
+RUN echo "export LINOROBOT2_BASE=2wd" >> ~/.bashrc && \
+    echo "export LINOROBOT2_LASER_SENSOR=a1" >> ~/.bashrc && \
+    echo "source /project/linorobot2_ws/install/setup.bash" >> ~/.bashrc
