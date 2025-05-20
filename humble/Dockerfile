@@ -256,12 +256,24 @@ SHELL ["/bin/bash", "-l", "-c"]
 
 # Configure environment
 RUN echo "export PATH=/usr/local/cuda/bin:$PATH" >> ~/.bashrc && \
-    echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:/usr/local/lib:$LD_LIBRARY_PATH" >> ~/.bashrc && \
-    sudo rosdep init && \
-    rosdep update && \
-    echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && \
-    echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc && \
-    pip install --no-cache-dir pyquaternion && \
-    echo "export LINOROBOT2_BASE=2wd" >> ~/.bashrc && \
+    echo "export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
+
+# initialize rosdep
+RUN sudo rosdep init && \
+    rosdep update
+
+RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc && \
+    echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
+
+RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
+    ros-humble-nav2-* \
+    ros-humble-rplidar* \
+    ros-humble-xacro \
+    ros-humble-usb-cam #added webcam support
+
+RUN pip install pyquaternion
+
+
+RUN echo "export LINOROBOT2_BASE=2wd" >> ~/.bashrc && \
     echo "export LINOROBOT2_LASER_SENSOR=a1" >> ~/.bashrc && \
     echo "source /project/linorobot2_ws/install/setup.bash" >> ~/.bashrc
