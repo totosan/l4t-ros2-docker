@@ -1,1 +1,4 @@
 .DS_Store
+.webui_secret_key
+*.tar
+*.gz
