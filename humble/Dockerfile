@@ -155,10 +155,21 @@ RUN sudo apt-get update && sudo apt-get install -y --no-install-recommends \
     ros-humble-nav2-* \
     ros-humble-rplidar* \
     ros-humble-xacro \
-    ros-humble-usb-cam #added webcam support
+    ros-humble-usb-cam \
+    ros-humble-rmw-cyclonedds-cpp \
+    ros-humble-rosbag2-storage-mcap \
+    ros-humble-robot-localization \
+    ros-humble-joint-state-publisher \
+    ros-humble-tf-transformations
 
-RUN pip install pyquaternion
-
+RUN pip3 install \
+    pyquaternion \
+    numpy-quaternion \
+    quaternion \
+    pyzmq \
+    numpy==1.26.4 \
+    requests
+RUN pip3 install --upgrade transforms3d
 
 RUN echo "export LINOROBOT2_BASE=2wd" >> ~/.bashrc && \
     echo "export LINOROBOT2_LASER_SENSOR=a1" >> ~/.bashrc && \
